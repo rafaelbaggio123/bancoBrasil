@@ -21,8 +21,8 @@
 		this.extrato = [];
 
 		this.depositar = function(valor){
-			var op = new Operacao(new Date(),"Foi depositado",valor);
-			this.extrato.push(op);
+			var depos = new Operacao(new Date(),"Foi depositado",valor);
+			this.extrato.push(depos);
 			this.saldo += valor;
 		};
 		this.sacar = function(valor){
