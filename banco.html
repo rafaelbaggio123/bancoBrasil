@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+</body>
+<script>
+	var Operacao = function(data, tipo, valor){
+		this.data = data;
+		this.tipo = tipo;
+		this.valor = valor;
+	} 
+	var Conta = function (id,titular, cpf){
+		this.titular = titular;
+		this.cpf = cpf;
+		this.saldo = 0;
+		this.id = id;
+		this.limite = 0;
+		this.extrato = [];
+
+		this.depositar = function(valor){
+			var op = new Operacao(new Date(),"Foi depositado",valor);
+			this.extrato.push(op);
+			this.saldo += valor;
+		};
+		this.sacar = function(valor){
+			if(valor <= (this.saldo + this.limite)){	
+				this.saldo -= valor;
+				var saque = new Operacao(new Date(),"Foi sacado",valor);
+				this.extrato.push(saque);
+				return true;
+			}else{
+				return false;
+			}
+			
+
+		};
+		this.transferir = function(valor, conta){
+			if(this.sacar(valor)){
+				conta.depositar(valor);
+			}
+			this.sacar(valor);
+			conta.depositar(valor);
+		}
+	}
+	var novaConta = new Conta(1,"rafael", "999999999-9");
+	var novaConta1 = new Conta(2,"baggio", "999999999-9");
+	novaConta.depositar(1000);
+
+	novaConta1.depositar(100);
+	novaConta.transferir(100, novaConta1);
+	console.log(novaConta);
+	console.log(novaConta1);
+
+</script>
+</html>
